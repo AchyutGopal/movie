@@ -13,6 +13,8 @@ const Store = () => {
     totalProfile: {},
     cart: [],
     Search: "",
+    WebSeries250:[],
+    movie250:[]
   };
 // Api key  "k_TMhC11oM"   "k_Y8iP3Avt" Simply change the key here, if the key changes
 const key="k_Y8iP3Avt";

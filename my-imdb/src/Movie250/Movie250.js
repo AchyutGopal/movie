@@ -4,22 +4,22 @@ import {Context} from "../Context/Context"
 import {Link} from "react-router-dom";
 
 const Movie250 = () => {
-	const {state:{cart},addToCart,naviM}=useContext(Context);
+	const {state:{cart,movie250},addToCart,naviM}=useContext(Context);
   
   // Way to Fetch Details Using async and await.
-  let [movie250, setMovie250] = useState([]);
-  const getMovies = async () => {
-    const response = await fetch(
-      "https://jsonblob.com/api/964ac654-b228-11ea-a473-d7f4cca9f47e"
-    );
-    const json = await response.json();
-    console.log(json);
-    const { items } = json;
-    setMovie250((movie250 = [...items]));
-  };
-  useEffect(() => {
-    getMovies();
-  }, []);
+  // let [movie250, setMovie250] = useState([]);
+  // const getMovies = async () => {
+  //   const response = await fetch(
+  //     "https://jsonblob.com/api/964ac654-b228-11ea-a473-d7f4cca9f47e"
+  //   );
+  //   const json = await response.json();
+  //   console.log(json);
+  //   const { items } = json;
+  //   setMovie250((movie250 = [...items]));
+  // };
+  // useEffect(() => {
+  //   getMovies();
+  // }, []);
   console.log(movie250);
 
 
@@ -28,7 +28,7 @@ const Movie250 = () => {
     <div class="uk-background-secondary">
        <div class="uk-container uk-container-center">
      <div class="uk-grid uk-grid-medium uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l  uk-child-width-1-5@xl uk-grid-match js-filter uk-margin-top" data-uk-grid="masonry: true" data-uk-sortable="handle: .drag-icon">
-       {console.log(cart)}
+
 	    {movie250.map((item, index) => {
           return (
             <>
