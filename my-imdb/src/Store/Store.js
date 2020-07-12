@@ -1,7 +1,6 @@
-import React, { useReducer, useEffect, useState } from "react";
+import { useReducer, useEffect, useState } from "react";
 
 const Store = () => {
-
   //  Inital State
   const INITIAL_STATE = {
     movies: [],
@@ -13,11 +12,11 @@ const Store = () => {
     totalProfile: {},
     cart: [],
     Search: "",
-    WebSeries250:[],
-    movie250:[]
+    WebSeries250: [],
+    movie250: [],
   };
-// Api key  "k_TMhC11oM"   "k_Y8iP3Avt" Simply change the key here, if the key changes
-const key="k_Y8iP3Avt";
+  // Api key  "k_TMhC11oM"   "k_Y8iP3Avt" Simply change the key here, if the key changes
+  const key = "k_Y8iP3Avt";
 
   const reducer = (state, action) => {
     const { type, data } = action;
@@ -49,9 +48,8 @@ const key="k_Y8iP3Avt";
           ...state,
           ...data,
         };
-        
       }
-// Wishlist Remove
+      // Wishlist Remove
       case "removeMovie": {
         return {
           ...state,
@@ -62,17 +60,8 @@ const key="k_Y8iP3Avt";
   };
   // Sending Data to Dispatcher
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  let {
-    movies,
-    webSeries,
-    isAPILoaded,
-    movie,
-    cart,
-    movie250,
-    WebSeries250,
-  } = state;
- 
- 
+  let { movies, movie, cart, movie250, WebSeries250 } = state;
+
   //Gathering Slider Data
   useEffect(() => {
     fetch("https://jsonblob.com/api/e1d3c9c6-b53c-11ea-9bad-15dc06ea1f30")
@@ -116,18 +105,17 @@ const key="k_Y8iP3Avt";
 
   // Navigation Function from Home to Itempage
   const navi = (id) => {
-    const movie = movies.filter((movie) => movie.id == id);
+    const movie = movies.filter((movie) => movie.id === id);
 
     dispatch({
       type: "movie",
       data: { movie: movie[0] },
     });
-   
   };
 
- // Navigation Function from Movie250 to Itempage
+  // Navigation Function from Movie250 to Itempage
   const naviM = (id) => {
-    const movie = movie250.filter((movie) => movie.id == id);
+    const movie = movie250.filter((movie) => movie.id === id);
 
     dispatch({
       type: "movie",
@@ -135,40 +123,36 @@ const key="k_Y8iP3Avt";
     });
   };
 
-   // Navigation Function from WebSeries250 to Itempage
+  // Navigation Function from WebSeries250 to Itempage
   const naviW = (id) => {
-    const movie = WebSeries250.filter((movie) => movie.id == id);
+    const movie = WebSeries250.filter((movie) => movie.id === id);
 
     dispatch({
       type: "movie",
       data: { movie: movie[0] },
     });
   };
-  let [similar,setSimilar]=useState([]);
+  let [similar, setSimilar] = useState([]);
   let [fullcast, setFullcast] = useState({});
- 
-//  Gathering the full cast Details Based on Movie. It works when user click on button in ItemPage.
+
+  //  Gathering the full cast Details Based on Movie. It works when user click on button in ItemPage.
   const fullCastDetails = () => {
     fetch(`https://imdb-api.com/en/API/Title/${key}/${movie.id}`)
       .then((res) => res.json())
       .then((s) => {
         setFullcast((fullcast = { ...s }));
-        let {similars}=fullcast;
+        let { similars } = fullcast;
         setSimilar([...similars]);
-        console.log(fullcast);
       });
-    }
+  };
 
-    // Updates the trailer of the Movie on clicking Button
+  // Updates the trailer of the Movie on clicking Button
   const trailerUpdate = () => {
     fetch(`https://imdb-api.com/en/API/YouTubeTrailer/${key}/${movie.id}`)
       .then((res) => res.json())
       .then((s) => {
         setLink((link = { ...s }));
-        console.log(link);
       });
-
-    console.log(link);
   };
 
   // To Set the profileName
@@ -179,7 +163,6 @@ const key="k_Y8iP3Avt";
     });
   };
 
-
   // Pass Details of User to Navigation Bar to Display.
   const passDetailsToNav = (x) => {
     dispatch({
@@ -189,7 +172,6 @@ const key="k_Y8iP3Avt";
   };
 
   let [link, setLink] = useState({});
-
 
   // Add to cart Logic Starts here
 
@@ -204,12 +186,12 @@ const key="k_Y8iP3Avt";
     else {
       count = 0;
       for (let z = 0; z < cart.length; z++) {
-        if (cart[z].id == item.id) {
+        if (cart[z].id === item.id) {
           count++;
           if (count > 0) break;
         }
       }
-      if (count == 0) {
+      if (count === 0) {
         dCart.push(item);
       } else {
         alert(item.title + " already addded to list!");
@@ -222,19 +204,17 @@ const key="k_Y8iP3Avt";
         cart: [...cart, ...dCart],
       },
     });
-    console.log(item);
+
     //}
   };
 
   // remove from the list
 
   const removeFromList = (index) => {
-    console.log(index);
-    console.log(cart.filter((a, i) => i != index));
     dispatch({
       type: "removeMovie",
       data: {
-        cart: [...cart.filter((a, i) => i != index)],
+        cart: [...cart.filter((a, i) => i !== index)],
         //cart :[...cart.splice(index,1)];
       },
     });
@@ -256,11 +236,8 @@ const key="k_Y8iP3Avt";
     similar,
     key,
     WebSeries250,
-    movie250
+    movie250,
   };
-
-
-
 };
 
 export default Store;
